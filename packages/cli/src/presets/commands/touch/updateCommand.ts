@@ -1,9 +1,7 @@
 import { downloadGitRepo, chalk, ora, fs } from '@idora/utils';
 import { join } from 'path';
 import * as os from "os";
-
-const origin = 'ineo6/dora-touch-template';
-const branch = "#master";
+import { branch, origin } from "./constants";
 
 const tmpDirPrefix = join(os.tmpdir(), '.tmp');
 const tmpDir = fs.mkdtempSync(tmpDirPrefix);

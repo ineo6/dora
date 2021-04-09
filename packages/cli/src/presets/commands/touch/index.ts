@@ -7,7 +7,6 @@ export default (ctx: IPluginContext) => {
     plugin: 'touch',
     name: 'touch',
     synopsisList: [
-      'ls',
       'add <name>',
       'update'
     ],

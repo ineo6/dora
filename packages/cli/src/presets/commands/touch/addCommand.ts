@@ -1,10 +1,19 @@
 import { inquirer, chalk, fs } from '@idora/utils'
-import { join, resolve, basename } from "path";
+import { resolve, basename } from "path";
+import { templateJsonFile, templatePath } from "./constants";
+import updateCommand from "./updateCommand";
 
-const templatePath = join(__dirname, './template');
-const templateJsonFile = join(templatePath, 'data.json');
+let fileList: ITemplateFile[] = [];
 
-const fileList: ITemplateFile[] = require(templateJsonFile);
+// todo 临时方案
+// 代码较大的情况下会在执行命令后完成
+(async function () {
+  if (!fs.existsSync(templateJsonFile)) {
+    await updateCommand()
+  }
+
+  fileList = require(templateJsonFile);
+})()
 
 interface ITemplateFile {
   name: string;
