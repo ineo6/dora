@@ -1,6 +1,6 @@
 {
   "name": "@idora/service",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "@idora/service",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -25,7 +25,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@idora/utils": "1.0.0",
+    "@idora/utils": "1.0.1",
     "joi": "^17.4.0",
     "tapable": "^2.2.0"
   }
