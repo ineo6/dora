@@ -11,7 +11,7 @@ const getPackages = require('./utils/getPackages');
   const pkgs = getPackages();
 
   pkgs.forEach(shortName => {
-    const name = shortName === 'idora' ? shortName : `@idora/${shortName}`;
+    const name = shortName === 'doraem' ? shortName : `@idora/${shortName}`;
 
     const pkgJSONPath = join(
       __dirname,
@@ -63,7 +63,7 @@ const getPackages = require('./utils/getPackages');
       writeFileSync(pkgJSONPath, `${JSON.stringify(json, null, 2)}\n`);
     }
 
-    if (shortName !== 'idora') {
+    if (shortName !== 'doraem') {
       const readmePath = join(
         __dirname,
         '..',

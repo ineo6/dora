@@ -114,7 +114,7 @@ async function release() {
   const isNext = isNextVersion(currVersion);
   pkgs
     .sort(a => {
-      return a === 'idora' ? 1 : -1;
+      return a === 'doraem' ? 1 : -1;
     })
     .forEach((pkg, index) => {
       const pkgPath = join(cwd, 'packages', pkg);

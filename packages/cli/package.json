@@ -1,7 +1,7 @@
 {
-  "name": "idora",
+  "name": "doraem",
   "version": "1.0.0",
-  "description": "idora",
+  "description": "doraem",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
