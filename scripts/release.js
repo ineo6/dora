@@ -9,16 +9,16 @@ const cwd = process.cwd();
 const args = yParser(process.argv.slice(2));
 const lernaCli = require.resolve('lerna/cli');
 
-function printErrorAndExit(message) {
+function printErrorAndExit (message) {
   console.error(chalk.red(message));
   process.exit(1);
 }
 
-function logStep(name) {
+function logStep (name) {
   console.log(`${chalk.gray('>> Release:')} ${chalk.magenta.bold(name)}`);
 }
 
-async function release() {
+async function release () {
   // Check git status
   if (!args.skipGitStatusCheck) {
     const gitStatus = execa.sync('git', ['status', '--porcelain']).stdout;
@@ -49,7 +49,8 @@ async function release() {
     updated = updatedStdout
       .split('\n')
       .map(pkg => {
-        return pkg.split('/')[1];
+        if (pkg === 'doraem') return pkg;
+        else return pkg.split('/')[1];
       })
       .filter(Boolean);
     if (!updated.length) {
