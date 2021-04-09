@@ -1,0 +1,32 @@
+{
+  "name": "@idora/service",
+  "version": "0.0.1",
+  "description": "@idora/service",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ineo6/dora"
+  },
+  "keywords": [
+    "dora"
+  ],
+  "authors": [
+    "ineo6 <arklove@qq.com> (https://github.com/ineo6)"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/ineo6/dora/issues",
+  "homepage": "https://github.com/ineo6/dora/tree/master/packages/service#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@idora/utils": "0.0.1",
+    "joi": "^17.4.0",
+    "tapable": "^2.2.0"
+  }
+}
