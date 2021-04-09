@@ -1,6 +1,6 @@
 {
   "name": "idora",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "idora",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -25,8 +25,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@idora/service": "0.0.1",
-    "@idora/utils": "0.0.1",
+    "@idora/service": "1.0.0",
+    "@idora/utils": "1.0.0",
     "cgr": "^1.2.9"
   },
   "bin": {
