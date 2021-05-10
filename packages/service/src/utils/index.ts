@@ -1,56 +1,57 @@
-import * as path from 'path'
-import * as resolve from 'resolve'
-import { isNpmPkg, getModuleDefaultExport, NODE_MODULES_REG, lodash } from '@idora/utils'
+import * as path from 'path';
+import {
+  isNpmPkg, getModuleDefaultExport, NODE_MODULES_REG, lodash, resolve,
+} from '@idora/utils';
 
-import { PluginItem } from '../Kernel'
-import { PluginType } from './constants'
-import { IPlugin } from './types'
+import { PluginItem } from '../Kernel';
+import { PluginType } from './constants';
+import { IPlugin } from './types';
 
-export function getPluginPath (pluginPath: string) {
-  if (isNpmPkg(pluginPath) || path.isAbsolute(pluginPath)) return pluginPath
-  throw new Error('plugin 和 preset 配置必须为绝对路径或者包名')
+export function getPluginPath(pluginPath: string) {
+  if (isNpmPkg(pluginPath) || path.isAbsolute(pluginPath)) return pluginPath;
+  throw new Error('plugin 和 preset 配置必须为绝对路径或者包名');
 }
 
-export function convertPluginsToObject (items: PluginItem[]) {
+export function convertPluginsToObject(items: PluginItem[]) {
   return () => {
-    const obj = {}
+    const obj = {};
     if (Array.isArray(items)) {
-      items.forEach(item => {
+      items.forEach((item) => {
         if (typeof item === 'string') {
-          const name = getPluginPath(item)
-          obj[name] = null
+          const name = getPluginPath(item);
+          obj[name] = null;
         } else if (Array.isArray(item)) {
-          const name = getPluginPath(item[0])
-          obj[name] = item[1]
+          const name = getPluginPath(item[0]);
+          obj[name] = item[1];
         }
-      })
+      });
     }
-    return obj
-  }
+    return obj;
+  };
 }
 
-export function mergePlugins (dist: PluginItem[], src: PluginItem[]) {
+export function mergePlugins(dist: PluginItem[], src: PluginItem[]) {
   return () => {
-    const srcObj = convertPluginsToObject(src)()
-    const distObj = convertPluginsToObject(dist)()
-    return lodash.merge(srcObj, distObj)
-  }
+    const srcObj = convertPluginsToObject(src)();
+    const distObj = convertPluginsToObject(dist)();
+    return lodash.merge(srcObj, distObj);
+  };
 }
 
 // getModuleDefaultExport
-export function resolvePresetsOrPlugins (root: string, args: any, type: PluginType): IPlugin[] {
-  return Object.keys(args).map(item => {
-    let pkgInfo: any
+export function resolvePresetsOrPlugins(root: string, args: any, type: PluginType): IPlugin[] {
+  return Object.keys(args).map((item) => {
+    let pkgInfo: any;
     const fPath = resolve.sync(item, {
       basedir: root,
       extensions: ['.js', '.ts'],
-      packageFilter (pkg) {
-        pkgInfo = pkg
-      }
-    })
-    let name = fPath
+      packageFilter(pkg) {
+        pkgInfo = pkg;
+      },
+    });
+    let name = fPath;
     if (NODE_MODULES_REG.test(fPath) && isNpmPkg(item)) {
-      name = pkgInfo!.name || fPath
+      name = pkgInfo!.name || fPath;
     }
     return {
       id: fPath,
@@ -58,40 +59,37 @@ export function resolvePresetsOrPlugins (root: string, args: any, type: PluginTy
       name,
       type,
       opts: args[item] || {},
-      apply () {
+      apply() {
         // eslint-disable-next-line no-useless-catch
         try {
-          // eslint-disable-next-line global-require,import/no-dynamic-require
-          return getModuleDefaultExport(require(fPath))
+          return getModuleDefaultExport(require(fPath));
         } catch (err) {
-          throw err
+          throw err;
         }
-      }
-    }
-  })
+      },
+    };
+  });
 }
 
-function supplementBlank (length: number) {
-  return Array(length).map(() => '').join(' ')
+function supplementBlank(length: number) {
+  return Array(length).map(() => '').join(' ');
 }
 
-export function printHelpLog (command: string, optionsList: Map<string, string>, synopsisList?: Set<string>) {
-  console.log(`Usage: arms ${command} [options]`)
-  console.log()
-  console.log('Options:')
-  const keys = Array.from(optionsList.keys())
-  const maxLength = keys.reduce((v1, v2) => {
-    return v1.length > v2.length ? v1 : v2
-  }).length + 3
+export function printHelpLog(command: string, optionsList: Map<string, string>, synopsisList?: Set<string>) {
+  console.log(`Usage: arms ${command} [options]`);
+  console.log();
+  console.log('Options:');
+  const keys = Array.from(optionsList.keys());
+  const maxLength = keys.reduce((v1, v2) => (v1.length > v2.length ? v1 : v2)).length + 3;
   optionsList.forEach((v, k) => {
-    const supplementBlankLength = maxLength - k.length
-    console.log(`  ${k}${supplementBlank(supplementBlankLength)}${v}`)
-  })
+    const supplementBlankLength = maxLength - k.length;
+    console.log(`  ${k}${supplementBlank(supplementBlankLength)}${v}`);
+  });
   if (synopsisList && synopsisList.size) {
-    console.log()
-    console.log('Synopsis:')
-    synopsisList.forEach(item => {
-      console.log(`  ${item}`)
-    })
+    console.log();
+    console.log('Synopsis:');
+    synopsisList.forEach((item) => {
+      console.log(`  ${item}`);
+    });
   }
 }

@@ -1,10 +1,10 @@
-import { Kernel } from '@idora/service'
+import { Kernel } from '@idora/service';
 
 export default function nrm(kernel: Kernel, {
   cmd,
   key,
   value,
-  isHelp
+  isHelp,
 }: {
   cmd: string,
   key?: string,
@@ -17,7 +17,7 @@ export default function nrm(kernel: Kernel, {
       cmd,
       key,
       value,
-      isHelp
-    }
-  })
+      isHelp,
+    },
+  });
 }

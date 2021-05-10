@@ -1,5 +1,5 @@
-import * as os from 'os'
-import * as chalk from 'chalk'
+import * as os from 'os';
+import * as chalk from 'chalk';
 
 export enum processTypeEnum {
   START = 'start',
@@ -26,11 +26,11 @@ export interface IProcessTypeMap {
 export const processTypeMap: IProcessTypeMap = {
   [processTypeEnum.REMIND]: {
     name: '提示',
-    color: 'green'
-  }
-}
+    color: 'green',
+  },
+};
 
-export const NODE_MODULES = 'node_modules'
-export const NODE_MODULES_REG = /(.*)node_modules/
+export const NODE_MODULES = 'node_modules';
+export const NODE_MODULES_REG = /(.*)node_modules/;
 
-export const isWindows = os.platform() === 'win32'
+export const isWindows = os.platform() === 'win32';

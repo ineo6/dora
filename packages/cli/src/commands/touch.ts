@@ -1,10 +1,10 @@
-import { Kernel } from '@idora/service'
+import { Kernel } from '@idora/service';
 
 export default function touch(kernel: Kernel, {
   cmd,
   key,
   value,
-  isHelp
+  isHelp,
 }: {
   cmd: string,
   key?: string,
@@ -17,7 +17,7 @@ export default function touch(kernel: Kernel, {
       cmd,
       key,
       value,
-      isHelp
-    }
-  })
+      isHelp,
+    },
+  });
 }

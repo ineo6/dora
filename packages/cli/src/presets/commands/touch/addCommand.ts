@@ -1,7 +1,7 @@
-import { inquirer, chalk, fs } from '@idora/utils'
-import { resolve, basename } from "path";
-import { templateJsonFile, templatePath } from "./constants";
-import updateCommand from "./updateCommand";
+import { inquirer, chalk, fs } from '@idora/utils';
+import { resolve, basename } from 'path';
+import { templateJsonFile, templatePath } from './constants';
+import updateCommand from './updateCommand';
 
 let fileList: ITemplateFile[] = [];
 
@@ -9,11 +9,11 @@ let fileList: ITemplateFile[] = [];
 // 代码较大的情况下会在执行命令后完成
 (async function () {
   if (!fs.existsSync(templateJsonFile)) {
-    await updateCommand()
+    await updateCommand();
   }
 
   fileList = require(templateJsonFile);
-})()
+}());
 
 interface ITemplateFile {
   name: string;
@@ -28,18 +28,16 @@ interface IChoice {
   short: string;
 }
 
-const choices: IChoice[] = fileList.map(tpl => {
-  return {
-    name: `${tpl.name} - ${chalk.visible(tpl.description)}`,
-    value: resolve(templatePath, tpl.path),
-    short: tpl.name,
-  };
-});
+const choices: IChoice[] = fileList.map((tpl) => ({
+  name: `${tpl.name} - ${chalk.visible(tpl.description)}`,
+  value: resolve(templatePath, tpl.path),
+  short: tpl.name,
+}));
 
-async function copyFileToDest (file: string) {
+async function copyFileToDest(file: string) {
   const fileName = basename(file);
 
-  const fileConfig = fileList.find(item => item.name === fileName)
+  const fileConfig = fileList.find((item) => item.name === fileName);
 
   const destFilePath = resolve(process.cwd(), fileConfig?.alias || fileName);
   let shouldWrite = true;
@@ -49,8 +47,8 @@ async function copyFileToDest (file: string) {
       name: 'override',
       message: '当前目录下已存在相同文件，是否要覆盖？',
       type: 'confirm',
-      default: false
-    })
+      default: false,
+    });
 
     shouldWrite = answers.override;
   }
@@ -60,9 +58,9 @@ async function copyFileToDest (file: string) {
   }
 }
 
-export default async function addCommand (cmdArgs: any[]) {
+export default async function addCommand(cmdArgs: any[]) {
   let filePath = '';
-  const arg1 = cmdArgs[0]
+  const arg1 = cmdArgs[0];
 
   if (arg1) {
     const matchFile = choices.find((item) => item.short === arg1);
@@ -78,7 +76,7 @@ export default async function addCommand (cmdArgs: any[]) {
         name: 'name',
         message: '请选择要创建的模板文件',
         type: 'list',
-        choices: choices,
+        choices,
       },
     ]);
 

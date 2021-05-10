@@ -1,5 +1,6 @@
 {
   "extends": [
+    "magic",
     "magic/typescript"
   ],
   "globals": {
@@ -7,14 +8,6 @@
   "rules": {
     "no-bitwise": 0,
     "prefer-arrow-callback": "off",
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "js": "never",
-        "ts": "never"
-      }
-    ],
     "import/no-unresolved": "off",
     "no-useless-concat": "off"
   }

@@ -1,12 +1,14 @@
-import { downloadGitRepo, chalk, ora, fs } from '@idora/utils';
+import {
+  downloadGitRepo, chalk, ora, fs,
+} from '@idora/utils';
 import { join } from 'path';
-import * as os from "os";
-import { branch, origin } from "./constants";
+import * as os from 'os';
+import { branch, origin } from './constants';
 
 const tmpDirPrefix = join(os.tmpdir(), '.tmp');
 const tmpDir = fs.mkdtempSync(tmpDirPrefix);
 
-export default async function updateCommand () {
+export default async function updateCommand() {
   const spinner = ora(`downloading ${origin}...`);
   spinner.start();
 
@@ -19,13 +21,13 @@ export default async function updateCommand () {
         try {
           fs.copySync(join(tmpDir, 'files'), join(__dirname, './template'));
 
-          resolve()
+          resolve();
           console.log(chalk.green('更新touch file完成'));
         } catch (e) {
-          reject()
+          reject();
           console.log(chalk.red('更新touch file失败', e.message));
         }
       }
-    })
-  })
+    });
+  });
 }

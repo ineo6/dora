@@ -1,6 +1,6 @@
-import joi from 'joi'
+import joi from 'joi';
 
-import { PluginType } from './constants'
+import { PluginType } from './constants';
 
 export interface IPaths {
   /**
