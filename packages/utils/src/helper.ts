@@ -224,4 +224,4 @@ export interface FileStat {
   isFile: boolean
 }
 
-export const getModuleDefaultExport = (exports) => (exports.__esModule ? exports.default : exports);
+export const getModuleDefaultExport = (exports: { __esModule: any; default: any; }) => (exports.__esModule ? exports.default : exports);
