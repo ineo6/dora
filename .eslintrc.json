@@ -1,6 +1,5 @@
 {
   "extends": [
-    "magic",
     "magic/typescript"
   ],
   "globals": {

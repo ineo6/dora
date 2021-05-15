@@ -133,34 +133,33 @@ export function generateEnvList(env: object): object {
   return res;
 }
 
-/*eslint-disable*/
-const retries = (process.platform === 'win32') ? 100 : 1
+const retries = (process.platform === 'win32') ? 100 : 1;
 
-export function emptyDirectory(dirPath: string, opts: { excludes: string[] } = {excludes: []}) {
+export function emptyDirectory(dirPath: string, opts: { excludes: string[] } = { excludes: [] }) {
   if (fs.existsSync(dirPath)) {
     fs.readdirSync(dirPath).forEach(file => {
-      const curPath = path.join(dirPath, file)
+      const curPath = path.join(dirPath, file);
       if (fs.lstatSync(curPath).isDirectory()) {
-        let removed = false
-        let i = 0 // retry counter
+        let removed = false;
+        let i = 0; // retry counter
         do {
           try {
             if (!opts.excludes.length || !opts.excludes.some(item => curPath.indexOf(item) >= 0)) {
-              emptyDirectory(curPath)
-              fs.rmdirSync(curPath)
+              emptyDirectory(curPath);
+              fs.rmdirSync(curPath);
             }
-            removed = true
+            removed = true;
           } catch (e) {
           } finally {
             if (++i < retries) {
-              continue
+              continue;
             }
           }
-        } while (!removed)
+        } while (!removed);
       } else {
-        fs.unlinkSync(curPath)
+        fs.unlinkSync(curPath);
       }
-    })
+    });
   }
 }
 
@@ -225,5 +224,4 @@ export interface FileStat {
   isFile: boolean
 }
 
-// @ts-ignore
 export const getModuleDefaultExport = (exports) => (exports.__esModule ? exports.default : exports);

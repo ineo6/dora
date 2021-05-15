@@ -10,7 +10,7 @@ const getPackages = require('./utils/getPackages');
 
   const pkgs = getPackages();
 
-  pkgs.forEach(shortName => {
+  pkgs.forEach((shortName) => {
     const name = shortName === 'doraem' ? shortName : `@idora/${shortName}`;
 
     const pkgJSONPath = join(
@@ -40,10 +40,11 @@ const getPackages = require('./utils/getPackages');
         homepage: `https://github.com/ineo6/dora/tree/master/packages/${shortName}#readme`,
         publishConfig: {
           access: 'public',
-          registry: 'https://registry.npmjs.org/'
+          registry: 'https://registry.npmjs.org/',
         },
       };
       if (pkgJSONExists) {
+        // eslint-disable-next-line global-require,import/no-dynamic-require
         const pkg = require(pkgJSONPath);
         [
           'dependencies',

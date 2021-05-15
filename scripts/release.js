@@ -9,21 +9,21 @@ const cwd = process.cwd();
 const args = yParser(process.argv.slice(2));
 const lernaCli = require.resolve('lerna/cli');
 
-function printErrorAndExit (message) {
+function printErrorAndExit(message) {
   console.error(chalk.red(message));
   process.exit(1);
 }
 
-function logStep (name) {
+function logStep(name) {
   console.log(`${chalk.gray('>> Release:')} ${chalk.magenta.bold(name)}`);
 }
 
-async function release () {
+async function release() {
   // Check git status
   if (!args.skipGitStatusCheck) {
     const gitStatus = execa.sync('git', ['status', '--porcelain']).stdout;
     if (gitStatus.length) {
-      printErrorAndExit(`Your git status is not clean. Aborting.`);
+      printErrorAndExit('Your git status is not clean. Aborting.');
     }
   } else {
     logStep(
@@ -48,9 +48,9 @@ async function release () {
     const updatedStdout = execa.sync(lernaCli, ['changed']).stdout;
     updated = updatedStdout
       .split('\n')
-      .map(pkg => {
+      .map((pkg) => {
         if (pkg === 'doraem') return pkg;
-        else return pkg.split('/')[1];
+        return pkg.split('/')[1];
       })
       .filter(Boolean);
     if (!updated.length) {
@@ -83,14 +83,14 @@ async function release () {
     // Sync version to root package.json
     logStep('sync version to root package.json');
     const rootPkg = require('../package');
-    Object.keys(rootPkg.devDependencies).forEach(name => {
+    Object.keys(rootPkg.devDependencies).forEach((name) => {
       if (name.startsWith('@idora/')) {
         rootPkg.devDependencies[name] = currVersion;
       }
     });
     writeFileSync(
       join(__dirname, '..', 'package.json'),
-      JSON.stringify(rootPkg, null, 2) + '\n',
+      `${JSON.stringify(rootPkg, null, 2)}\n`,
       'utf-8',
     );
 
@@ -104,7 +104,7 @@ async function release () {
     await exec('git', ['tag', `v${currVersion}`]);
 
     // Push
-    logStep(`git push`);
+    logStep('git push');
     await exec('git', ['push', 'origin', 'master', '--tags']);
   }
 
@@ -114,9 +114,7 @@ async function release () {
   const currVersion = require('../lerna').version;
   const isNext = isNextVersion(currVersion);
   pkgs
-    .sort(a => {
-      return a === 'doraem' ? 1 : -1;
-    })
+    .sort((a) => (a === 'doraem' ? 1 : -1))
     .forEach((pkg, index) => {
       const pkgPath = join(cwd, 'packages', pkg);
       const { name, version } = require(join(pkgPath, 'package.json'));
@@ -137,7 +135,7 @@ async function release () {
   logStep('done');
 }
 
-release().catch(err => {
+release().catch((err) => {
   console.error(err);
   process.exit(1);
 });
