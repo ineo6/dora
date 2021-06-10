@@ -116,6 +116,8 @@ async function release() {
   pkgs
     .sort((a) => (a === 'doraem' ? 1 : -1))
     .forEach((pkg, index) => {
+      if(pkg === 'doraem')
+        pkg = 'cli'
       const pkgPath = join(cwd, 'packages', pkg);
       const { name, version } = require(join(pkgPath, 'package.json'));
       if (version === currVersion) {
