@@ -4,6 +4,7 @@
     "build": "father-build",
     "watch": "father-build --watch",
     "link": "cd packages/cli && yarn link",
+    "unlink": "cd packages/cli && yarn unlink",
     "bootstrap": "node ./scripts/bootstrap.js",
     "release": "node ./scripts/release.js"
   },
